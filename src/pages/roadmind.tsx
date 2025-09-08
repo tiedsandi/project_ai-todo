@@ -160,7 +160,7 @@ export default function RoadmindDashboard() {
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mt-2 disabled:opacity-50 transition"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full mt-2 disabled:opacity-50 transition"
           >
             {loading ? "Loading..." : "Generate Roadmind"}
           </button>

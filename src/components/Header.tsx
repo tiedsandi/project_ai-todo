@@ -15,6 +15,7 @@ import Link from "next/link";
 export default function Header() {
   const [open, setOpen] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -25,9 +26,12 @@ export default function Header() {
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
       await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.error("Login error:", err);
+    } catch {
+      console.error("Login error:");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,15 +75,17 @@ export default function Header() {
           ) : (
             <button
               onClick={handleLogin}
-              className="bg-green-600 px-3 py-1 rounded"
+              disabled={loading}
+              className={`px-3 py-1 rounded ${
+                loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600"
+              }`}
             >
-              Login Google
+              {loading ? "Logging in..." : "Login Google"}
             </button>
           )}
         </nav>
       </div>
 
-      {/* Menu Mobile */}
       {open && (
         <nav className="mt-4 flex flex-col gap-2 md:hidden">
           <Link href="/roadmind" className="hover:underline">
@@ -95,9 +101,12 @@ export default function Header() {
           ) : (
             <button
               onClick={handleLogin}
-              className="bg-green-500 px-3 py-1 rounded"
+              disabled={loading}
+              className={`px-3 py-1 rounded ${
+                loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500"
+              }`}
             >
-              Login Google
+              {loading ? "Logging in..." : "Login Google"}
             </button>
           )}
         </nav>
