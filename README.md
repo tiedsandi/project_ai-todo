@@ -1,40 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Roadmind 🛣️🧠
 
-## Getting Started
+Roadmind adalah aplikasi **AI Blog Planner** yang membantu menyusun konten atau roadmap harian sesuai kebutuhan.
+Cukup masukkan **topik** dan **durasi (jumlah hari)**, lalu AI akan menghasilkan rencana harian lengkap, misalnya:
 
-First, run the development server:
+- Hari 1 → Belajar dasar-dasar Web Development
+- Hari 2 → Mengenal HTML & CSS
+- ...
+- Hari 7 → Deploy project ke hosting
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Proyek ini dibangun dengan **Next.js** dan **Firebase**, serta memanfaatkan **Google Generative AI** untuk pembuatan konten otomatis.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## ✨ Fitur
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- 🔐 **Login dengan Google** via Firebase Authentication.
+- 🧑‍💻 **AI Content Planner**: user input topik + durasi → AI generate roadmap harian.
+- 📚 **Format Blog**: hasil tersimpan dan ditampilkan seperti artikel/blog.
+- ☁️ **Realtime Storage**: data disimpan dengan Firebase.
+- ⚡ **UI Modern & Responsif** dengan Next.js.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📸 Demo
 
-## Learn More
+<!-- **Demo Online:** [roadmind.vercel.app](https://roadmind.vercel.app) -->
 
-To learn more about Next.js, take a look at the following resources:
+![Roadmind Screenshot](./public/screenshot.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## ![Roadmind Demo](./public/demo.gif)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Teknologi yang digunakan
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/) – React framework modern.
+- [Firebase](https://firebase.google.com/) – Authentication & Database.
+- [Google Generative AI](https://ai.google/) – Content generation.
+- [TypeScript](https://www.typescriptlang.org/) – Strongly typed codebase.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 🚀 Cara Menjalankan
+
+1. Clone repository ini
+
+   ```bash
+   git clone https://github.com/tiedsandi/project_ai-todo.git
+   cd project_ai-todo
+   ```
+
+2. buat .env.local
+
+   ```bash
+   NEXT_PUBLIC_FIREBASE_API_KEY=...
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+   NEXT_PUBLIC_FIREBASE_APP_ID=...
+   GOOGLE_API_KEY=...
+   ```
+
+3. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+4. Tambahkan konfigurasi Firebase ke dalam file `.env.local`.
+5. Jalankan aplikasi
+
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🌐 Project Lainnya
+
+Cek project saya yang lain di sini 👉 [fachran-sandi.netlify.app](https://fachran-sandi.netlify.app/)
+
+---
