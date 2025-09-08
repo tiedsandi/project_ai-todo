@@ -1,63 +1,71 @@
 import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
-import { GetServerSideProps } from "next";
+import ReactMarkdown from "react-markdown";
 import { db } from "@/lib/firebase";
+import { useRouter } from "next/router";
 
 interface RoadmapItem {
   hari: number;
-  tanggal: string;
   kegiatan: string;
 }
 
-interface Blog {
-  id: string;
+interface Roadmind {
   judul: string;
   subJudul: string;
   roadmap: RoadmapItem[];
 }
 
-export default function BlogDetail({ blog }: { blog: Blog | null }) {
-  if (!blog) {
-    return <p className="text-center py-10">Blog tidak ditemukan 😢</p>;
+export default function RoadmindDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [roadmind, setRoadmind] = useState<Roadmind | null>(null);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchData = async () => {
+      const ref = doc(db, "blogs", id as string);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        setRoadmind(snap.data() as Roadmind);
+      } else {
+        setNotFound(true);
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  if (notFound) {
+    return (
+      <main className="max-w-2xl mx-auto p-6 text-center">
+        <h1 className="text-xl font-semibold mb-2">
+          😕 Roadmap tidak ditemukan
+        </h1>
+        <p className="text-gray-600">
+          Mungkin sudah dihapus atau ID yang kamu masukkan salah.
+        </p>
+      </main>
+    );
   }
 
-  return (
-    <main className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-2">{blog.judul}</h1>
-      <p className="text-gray-600 mb-6">{blog.subJudul}</p>
+  if (!roadmind) return <p className="p-4">Loading...</p>;
 
-      <div className="space-y-4">
-        {blog.roadmap.map((item) => (
-          <div
-            key={item.hari}
-            className="p-4 border rounded-lg shadow-sm bg-white"
-          >
-            <h2 className="font-semibold">
-              Hari {item.hari} - {item.tanggal}
-            </h2>
-            <p className="text-gray-700">{item.kegiatan}</p>
+  return (
+    <main className="max-w-5xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-2">{roadmind.judul}</h1>
+      <div className="text-gray-600 mb-6">
+        <ReactMarkdown>{roadmind.subJudul}</ReactMarkdown>
+      </div>
+
+      <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4">
+        {roadmind.roadmap.map((item) => (
+          <div key={item.hari} className="p-4 border rounded-lg">
+            <h3 className="font-semibold">Hari {item.hari}</h3>
+            <ReactMarkdown>{item.kegiatan}</ReactMarkdown>
           </div>
         ))}
       </div>
     </main>
   );
 }
-
-// Server-side fetch berdasarkan ID
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params!;
-  const ref = doc(db, "blogs", id as string);
-  const snap = await getDoc(ref);
-
-  if (!snap.exists()) {
-    return { props: { blog: null } };
-  }
-
-  const blog = { id: snap.id, ...snap.data() };
-
-  return {
-    props: {
-      blog: JSON.parse(JSON.stringify(blog)), // biar aman dipass ke client
-    },
-  };
-};
