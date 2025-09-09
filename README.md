@@ -24,7 +24,7 @@ Proyek ini dibangun dengan **Next.js** dan **Firebase**, serta memanfaatkan **Go
 
 ## 📸 Demo
 
-<!-- **Demo Online:** [roadmind.vercel.app](https://roadmind.vercel.app) -->
+**Demo Online:** [roadmind.vercel.app](https://project-roadmind-ai.vercel.app/)
 
 ![Roadmind Screenshot](./public/screenshot.png)
 
